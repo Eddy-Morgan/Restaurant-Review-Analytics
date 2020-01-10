@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script>
+        window.onload = function () {
+            
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            
+            title:{
+                text:"Top 100 Restaurants by Ratings"
+            },
+            axisX:{
+                interval: 1
+            },
+            axisY2:{
+                interlacedColor: "rgba(1,77,101,.2)",
+                gridColor: "rgba(1,77,101,.1)",
+                title: "Ratings"
+            },
+            data: [{
+                type: "bar",
+                name: "restaurants",
+                axisYType: "secondary",
+                color: "#014D65",
+                dataPoints: [
+                {% for key,value in top_competition.items() %}
+                    { y: {{value}}, label: "{{key}}"},
+                {% endfor %}
+                ]
+            }]
+        });
+        chart.render();
+        
+        }
+        </script>
+    <style>
+        body {
+            background-image: url('../static/restaurant.jpg');
+            background-repeat: no-repeat;
+            height: 100vh;
+            background-size: auto 100%;
+            text-align: center;
+            color: crimson;
+            overflow: hidden;
+        }
+
+        #topic {
+            font-size: 3em;
+            text-align: right;
+            margin-right: 100px;
+        }
+
+        #analyzebtn {
+            position: absolute;
+            top: 50%;
+            font-size: 3em;
+            padding: 10px
+        }
+
+        #analyzebtn:hover {
+            cursor: pointer;
+        }
+
+        .result {
+            color: black;
+            position: absolute;
+            left: 35%;
+
+        }
+
+        .graph {
+            width: 30vw;
+            position: absolute;
+            right: 0;
+            height: 70vh;
+        }
+
+        .text {
+            height: 60vh !important;
+            overflow-y: scroll;
+        }
+
+        .back {
+            text-decoration: none;
+            font-size: 30px;
+            font-weight: 600;
+            position: absolute;
+            top: 1px;
+            left: 4px;
+        }
+
+        .thick-border {
+            border: 3px solid black;
+            border-collapse: collapse;
+            width: 30vw;
+        }
+    </style>
+</head>
+
+
+<body>
+    <a class="back" href="/">&lsaquo;Back</a>
+    <h2 id="topic">MR SMITH'S RESTAURANT ADVISOR</h2>
+
+    <p><b>Results Below</b></p>
+
+    <p>Smith's Restaurant Ratings: <b>{{ratings[1]}}</b></p>
+
+    <div class="result">
+        <p><b>Average Ratings: </b></p>
+        <div class="text">
+            <table class="centered thick-border">
+                <tr>
+                    <th>Restaurant Id</th>
+                    <th>Rating</th>
+                </tr>
+                {% for k, v in ratings.items() %}
+                <tr>
+                    <td>{{ k }}</td>
+                    <td>{{ v }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
+    </div>
+    <div class="graph" id="chartContainer"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+</body>
+
+</html>

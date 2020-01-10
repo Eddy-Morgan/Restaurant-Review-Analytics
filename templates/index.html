@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {
+  background-image: url('../static/restaurant.jpg');
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-size: auto 100%;
+  overflow: hidden;
+  text-align: center;
+  color: crimson;
+}
+
+#topic {
+    font-size: 3em;
+    text-align: right;
+    margin-right: 100px;
+}
+
+#analyzebtn{
+    position: absolute;
+    top: 50%;
+    font-size: 3em;
+    padding: 10px
+}
+
+#analyzebtn:hover {
+    cursor: pointer;
+}
+.text {
+    color: black;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+}
+</style>
+<body>
+
+<h2 id="topic">MR SMITH'S RESTAURANT ADVISOR</h2>
+
+<p class="text">Click on the button below to analyze data</p>
+
+
+<form action="/analyse">
+    <button id="analyzebtn" type="submit">Analyze Data</button>
+</form>
+</body>
+</html>
