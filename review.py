@@ -23,7 +23,7 @@ def get_user_score(number_of_reviews, rating):
     score = number_of_reviews * rating
     return score
 
-def analyze():
+def analyze(n):
     for i in  tqdm(range(data_lines)):
         rid = df['rid'][i]
         # numberOfFriends = int(df['user_numberoffriends'][i])
@@ -45,6 +45,6 @@ def analyze():
     for rid in review_scores:
         rating = (review_scores[rid]/optimum_review_scores[rid])*5
         restaurants_ratings[rid] = float("{0:.2f}".format(rating))
-    top_100_competitors = dict(sorted(restaurants_ratings.items(), key=operator.itemgetter(1), reverse=True)[:100])
-    return restaurants_ratings,top_100_competitors
+    top_competitors = dict(sorted(restaurants_ratings.items(), key=operator.itemgetter(1), reverse=True)[:n])
+    return restaurants_ratings,top_competitors
   

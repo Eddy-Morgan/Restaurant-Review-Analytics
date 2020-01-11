@@ -10,7 +10,7 @@
                 animationEnabled: true,
 
                 title: {
-                    text: "Top 100 Restaurants by Ratings"
+                    text: "Top {{n}} Restaurants by Ratings"
                 },
                 axisX: {
                     interval: 1
@@ -149,8 +149,18 @@
 
 
     </div>
+    <div class="graph">
+        <form method="POST" action="/topcount">
+            <input name="count" placeholder="Top count" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type="number" maxlength="3" style="display: inline;"/>
+            <button style="display: inline;" type="submit">Rank</button>
+        </form>
 
-    <div class="graph" id="chartContainer"></div>
+        <div id="chartContainer"></div>
+    </div>
+
+    
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
