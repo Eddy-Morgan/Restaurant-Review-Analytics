@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request, redirect,url_for,session
+from flask import Flask,render_template, request, redirect,url_for,session, flash
 from review import analyze
 from flask_bootstrap import Bootstrap
 import json
@@ -32,6 +32,9 @@ def generateWorldCloud():
     average_ratings, competition = analyze(n)
     if request.method == 'POST':
         rid = request.form['rid']
+        if int(rid) > 958 or int(rid) < 1:
+            flash(' Number out of range, please input again!')
+            rid = 958
         draw_wordcloud(rid)
         return render_template('result.html', ratings=average_ratings,top_competition=competition,rid=rid, n=n)
     return render_template('result.html', ratings=average_ratings,top_competition=competition,rid=1, n=n)
@@ -44,6 +47,12 @@ def topCount():
         n= 10
     if request.method == 'POST':
         n = int(request.form['count'])
+        if n > 958 or n < 1:
+            flash('Number out of range, please input again!')
+            if 'n' in session:
+                n = session['n']
+            else:
+                n= 10
         average_ratings, competition = analyze(n)
         session['n'] = n
         return render_template('result.html', ratings=average_ratings,top_competition=competition,rid=1, n=n)

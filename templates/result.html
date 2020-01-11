@@ -112,17 +112,26 @@
     <a class="back" href="/">&lsaquo;Back</a>
 
     <div class="wordcloud">
-        
+
         <form method="POST" action="/wordcloud">
-            <input name="rid" placeholder="Restaurant id" 
+            <input name="rid" placeholder="Restaurant id"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="number" maxlength="3" style="display: inline;"/>
+                type="number" maxlength="3" style="display: inline;" />
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
             <button style="display: inline;" type="submit">Generate Word Cloud</button>
         </form>
         <h3 style="color: #3f51b5;width: max-content;margin-left: 50px;">Word Cloud For Restaurant {{rid}}</h3>
         <img src="../static/generated_clouds/result_{{rid}}.png">
     </div>
-   
+
     <h2 id="topic">MR SMITH'S RESTAURANT ADVISOR</h2>
 
     <p><b>Results Below</b></p>
@@ -151,16 +160,25 @@
     </div>
     <div class="graph">
         <form method="POST" action="/topcount">
-            <input name="count" placeholder="Top count" 
+            <input name="count" placeholder="Top count"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                type="number" maxlength="3" style="display: inline;"/>
+                type="number" maxlength="3" style="display: inline;" />
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
             <button style="display: inline;" type="submit">Rank</button>
         </form>
 
         <div id="chartContainer"></div>
     </div>
 
-    
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
