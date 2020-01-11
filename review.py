@@ -45,5 +45,6 @@ def analyze():
     for rid in review_scores:
         rating = (review_scores[rid]/optimum_review_scores[rid])*5
         restaurants_ratings[rid] = float("{0:.2f}".format(rating))
-    top_competitions = dict(sorted(restaurants_ratings.items(), key=operator.itemgetter(1), reverse=True)[:100])
-    return restaurants_ratings,top_competitions
+    top_100_competitors = dict(sorted(restaurants_ratings.items(), key=operator.itemgetter(1), reverse=True)[:100])
+    return restaurants_ratings,top_100_competitors
+  

@@ -5,42 +5,42 @@
 
     <script>
         window.onload = function () {
-            
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            
-            title:{
-                text:"Top 100 Restaurants by Ratings"
-            },
-            axisX:{
-                interval: 1
-            },
-            axisY2:{
-                interlacedColor: "rgba(1,77,101,.2)",
-                gridColor: "rgba(1,77,101,.1)",
-                title: "Ratings"
-            },
-            data: [{
-                type: "bar",
-                name: "restaurants",
-                axisYType: "secondary",
-                color: "#014D65",
-                dataPoints: [
-                {% for key,value in top_competition.items() %}
-                    { y: {{value}}, label: "{{key}}"},
-                {% endfor %}
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+
+                title: {
+                    text: "Top 100 Restaurants by Ratings"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY2: {
+                    interlacedColor: "rgba(1,77,101,.2)",
+                    gridColor: "rgba(1,77,101,.1)",
+                    title: "Ratings"
+                },
+                data: [{
+                    type: "bar",
+                    name: "restaurants",
+                    axisYType: "secondary",
+                    color: "#014D65",
+                    dataPoints: [
+                        {% for key, value in top_competition.items() %}
+                    { y: {{ value }}, label: "{{key}}"},
+            {% endfor %}
                 ]
             }]
         });
         chart.render();
         
         }
-        </script>
+    </script>
     <style>
         body {
-            background-image: url('../static/restaurant.jpg');
             background-repeat: no-repeat;
             height: 100vh;
+            font-family: "Courier New", Courier, monospace;
             background-size: auto 100%;
             text-align: center;
             color: crimson;
@@ -97,20 +97,41 @@
             border-collapse: collapse;
             width: 30vw;
         }
+
+        .wordcloud {
+            position: absolute;
+            top: 15vh;
+            left: 0px;
+            width: 300px;
+        }
     </style>
 </head>
 
 
 <body>
     <a class="back" href="/">&lsaquo;Back</a>
+
+    <div class="wordcloud">
+        
+        <form method="POST" action="/wordcloud">
+            <input name="rid" placeholder="Restaurant id" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                type="number" maxlength="3" style="display: inline;"/>
+            <button style="display: inline;" type="submit">Generate Word Cloud</button>
+        </form>
+        <h3 style="color: #3f51b5;width: max-content;margin-left: 50px;">Word Cloud For Restaurant {{rid}}</h3>
+        <img src="../static/generated_clouds/result_{{rid}}.png">
+    </div>
+   
     <h2 id="topic">MR SMITH'S RESTAURANT ADVISOR</h2>
 
     <p><b>Results Below</b></p>
 
-    <p>Smith's Restaurant Ratings: <b>{{ratings[1]}}</b></p>
+    <p style="color: black;"> Mr Smith's Restaurant Ratings: <b>{{ratings[1]}}</b></p>
+
 
     <div class="result">
-        <p><b>Average Ratings: </b></p>
+        <p><b>Average Ratings</b></p>
         <div class="text">
             <table class="centered thick-border">
                 <tr>
@@ -128,6 +149,7 @@
 
 
     </div>
+
     <div class="graph" id="chartContainer"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
