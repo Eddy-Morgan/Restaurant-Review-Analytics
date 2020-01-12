@@ -1,5 +1,5 @@
 from flask import Flask,render_template, request, redirect,url_for,session, flash
-from review import analyze
+from review import analyze,ridlist
 from flask_bootstrap import Bootstrap
 import json
 from sentiment_analysis import draw_wordcloud
@@ -32,7 +32,7 @@ def generateWorldCloud():
     average_ratings, competition = analyze(n)
     if request.method == 'POST':
         rid = request.form['rid']
-        if int(rid) > 958 or int(rid) < 1:
+        if int(rid) not in ridlist:
             flash(' Number out of range, please input again!')
             rid = 958
         draw_wordcloud(rid)
@@ -47,7 +47,7 @@ def topCount():
         n= 10
     if request.method == 'POST':
         n = int(request.form['count'])
-        if n > 958 or n < 1:
+        if n not in ridlist:
             flash('Number out of range, please input again!')
             if 'n' in session:
                 n = session['n']
